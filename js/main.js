@@ -22,7 +22,6 @@ addmarkerforpeaks();
 //function to duplicate markers to peaks_list object
 duplicatemarkers();
 getbounds();
-
 // Initialize the drawing manager.
 var drawingManager = new google.maps.drawing.DrawingManager({
   drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -128,5 +127,17 @@ function hidePeaks() {
 function duplicatemarkers(){
   for(var i=0;i<markers.length;i++){
     peaks_list.peaks[i].marker=markers[i];
+    peaks_list.peaks[i].marker.id=i;
+    peaks_list.peaks[i].marker.addListener('click',function(){
+      addlistenertoMarkers(this.id);
+    });
+    }
   }
+
+function addlistenertoMarkers(k){
+for(var i=0;i<peaks_list.peaks.length;i++){
+  if(peaks_list.peaks[i].marker.id==k){
+    locateSelected(peaks_list.peaks[i]);
+  }
+}
 }

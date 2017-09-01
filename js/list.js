@@ -263,7 +263,7 @@ markers[i].setMap(map);
 }
 //function to highlight the selected peak from list
 function locateSelected(peakSelected){
-  //console.log(locationName);
+	console.log(peakSelected);
       map.setCenter(peakSelected.position);
       map.setZoom(9);
       for(var i=0;i<peaks_list.peaks.length;i++){
@@ -289,13 +289,10 @@ function callback(results, status) {
 		placeId: results[0].place_id
 	}, function(place, status) {
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
-			console.log(place);
 			for(var i=0;i<place.photos.length;i++){
 			photos_array[i]=place.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 300});
 		}
-		console.log(photos_array);
 		var img='<img src='+photos_array[4]+' alt="image">'
-		console.log(photos_array);
 		var peakInfo = new google.maps.InfoWindow({
 			Content:'<h1>'+peakSelected.name+'</h1><hr>'+img
 		});
