@@ -1,0 +1,85 @@
+*{
+/*border: 1px solid black;*/
+}
+html, body {
+  height: 100%;
+  padding: 0;
+  margin:0;
+}
+body{
+  display: flex;
+  color:silver;
+}
+#sidebar{
+width:30%;
+background-color: #333333;
+margin:0;
+text-align: center;
+}
+.mapArea{
+  width:70%;
+}
+#snowmap {
+  width:100%;
+  height: 100%;
+}
+.icon{
+  width:30px;
+  vertical-align: middle;
+  padding: 1%;
+}
+.title{
+  color: white;
+}
+#info{
+padding:1.5%;
+}
+#search{
+  font-size: 16px;
+  box-shadow: 1px 1px .5px .5px silver;
+}
+.peaks{
+  padding:0;
+  overflow: scroll;
+  height:50%;
+  overflow-x: hidden;
+}
+/*styleing the scrollbar*/
+.peaks::-webkit-scrollbar {
+    width: 4px;
+    background-color:grey;
+    padding-right: 2%;
+    border-radius: 20px;
+}
+
+.peaks::-webkit-scrollbar-track {
+    -webkit-box-shadow: outset 0 0 1px rgba(0,0,0,0.2);
+    border-radius: 20px;
+}
+
+.peaks::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    -webkit-box-shadow: outset 0 0 6px rgba(0,0,0,0.5);
+    background-color: silver;
+}
+.mapOverlay {
+  position: absolute;
+      top: 10px;
+      left: 65%;
+      z-index: 5;
+}
+.drawing{
+  left:50%;
+}
+#mapOverlay2 {
+  position: absolute;
+      top: 10px;
+      left: 75%;
+      z-index: 5;
+}
+
+.peaks-list:hover{
+  font-weight: bold;
+  color:rgb(176, 176, 176);
+  background-color: rgba(214, 214, 214, 0.04)
+}
