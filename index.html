@@ -8,25 +8,72 @@
   <meta name="author" content="Karthik">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="libraries/knockout-3.4.2.js"></script>
 </head>
 <body>
-  <div id="sidebar">
+  <div id="sidebar" class="col-md-3 col-sm-3 ">
     <h2 class="title"><img class="icon" alt="icon" src="icons\mountain-peak-clipart-1.jpg">
-      Asia's Peaks<img class="icon" alt="icon" src="icons\mountain-peak-clipart-1.jpg"></h2>
-    <p id="info">Here is a list of the highest Peaks in Asia.The markers on the map
+      Himalayan Peaks<img class="icon" alt="icon" src="icons\mountain-peak-clipart-1.jpg"></h2>
+    <p id="info">Here is a list of the highest Peaks in Himalayas.The markers on the map
        indicate the location of the peaks.Use the info windows to get further information.</p>
-    <input id="search" type="text" placeholder="seach for the peaks here" >
-    <ul class="peaks" data-bind="foreach: peaks_list.peaks">
+    <input id="search" type="text" class="form-control" data-bind="value:search, valueUpdate:'keyup'" placeholder="seach for peaks here" >
+    <br>
+    <ul class="peaks" data-bind="foreach:peaklist">
       <li class="peaks-list" data-bind="text:name,style:{color:'#f9f9f9',padding:'10px'},click:locateSelected"></li>
     </ul>
-    <br>
   </div>
-  <div class="mapArea">
- <button class="mapOverlay drawing">Toggle DrawTools</button>
- <button class="mapOverlay" data-bind="click: switchTheme">Bright/dark</button>
- <button id="mapOverlay2" data-bind="click: resetPeaks">Reset Markers</button>
+  <div class="mapArea col-md-9 col-sm-9">
+  <div class="mapOverlay">
+  <div class="btn-group" role="group">
+ <button class="btn btn-default drawing">DrawTools</button>
+ <button class="btn btn-default" data-bind="click:switchTheme">Bright/dark</button>
+ <button class="btn btn-default" data-bind="click:resetPeaks">Reset Markers</button>
+ </div>
+ </div>
   <div id="snowmap"></div>
+</div>
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel"></h2>
+      </div>
+      <div class="modal-body">
+        <div class="modal-wiki-info"></div>
+        <span class="modal-peak-Elevation"></div>
+        <div class="container-fluid">
+        <div class="modal-img-carousel col-sm-6">
+          <h4>Images from Google Places API</h4>
+          <div id="picsCarousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+			<img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />
+    </div>
+<!--The images will be generated when a marker or name from the list is clicked.-->
+  </div>
+  <!-- Carousel controls -->
+    <a class="carousel-control left" href="#picsCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="carousel-control right" href="#picsCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
+        </div>
+        <div class="modal-street-view col-sm-6">
+          <h4>Street View:</h4>
+          <div id="pano"></div>
+        </div>
+      </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
     <script src="js/list.js"></script>
   <script src="js/main.js"></script>

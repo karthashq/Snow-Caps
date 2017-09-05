@@ -1,27 +1,23 @@
-*{
-/*border: 1px solid black;*/
-}
+
 html, body {
   height: 100%;
   padding: 0;
-  margin:0;
+  background-color: #333333 !important;
 }
 body{
-  display: flex;
   color:silver;
 }
 #sidebar{
-width:30%;
-background-color: #333333;
-margin:0;
+background-color: rgba(51,51,51,0.5);
+padding:0 !important;
 text-align: center;
 }
 .mapArea{
-  width:70%;
+padding: 0 !important;
 }
 #snowmap {
   width:100%;
-  height: 100%;
+  height: 635px;
 }
 .icon{
   width:30px;
@@ -32,16 +28,22 @@ text-align: center;
   color: white;
 }
 #info{
-padding:1.5%;
+padding:1.2%;
+color: white;
 }
 #search{
   font-size: 16px;
   box-shadow: 1px 1px .5px .5px silver;
 }
+#pano {
+  width: 250px;
+  height: 250px;
+}
+
 .peaks{
   padding:0;
   overflow: scroll;
-  height:50%;
+  height:400px;
   overflow-x: hidden;
 }
 /*styleing the scrollbar*/
@@ -63,23 +65,39 @@ padding:1.5%;
     background-color: silver;
 }
 .mapOverlay {
-  position: absolute;
-      top: 10px;
-      left: 65%;
-      z-index: 5;
+  position: fixed;
+  top: 10px;
+  left: 40%;
+  z-index: 7;
 }
-.drawing{
-  left:50%;
-}
-#mapOverlay2 {
-  position: absolute;
-      top: 10px;
-      left: 75%;
-      z-index: 5;
-}
-
 .peaks-list:hover{
   font-weight: bold;
   color:rgb(176, 176, 176);
-  background-color: rgba(214, 214, 214, 0.04)
+  background-color: rgba(214, 214, 214, 0.04);
+  cursor: pointer;
+}
+#infowindow{
+color:#333333;
+margin: 0;
+overflow: hidden;
+}
+.menu-icon{
+  position: absolute;
+  z-index: 5;
+  color:#333333;
+  background-color: rgba(0,0,0,0);
+  left: 1%;
+  top:10px;
+}
+.modal-img-carousel{
+  width:100%;
+  height:100%;
+}
+.modal-street-view{
+  width:100%;
+  height: 100%;
+}
+.carousel-img{
+  width:500px;
+  height: 500px;
 }
