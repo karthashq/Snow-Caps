@@ -323,7 +323,7 @@ displayLocationElevation(peakSelected);
 
 
 function InfofromWiki(location){
- var wikiurl= "http://en.wikipedia.org/w/api.php?action=opensearch&search="+location.name+"&format=json&callback=wikiCallback";
+ var wikiurl= "https://en.wikipedia.org/w/api.php?action=opensearch&search="+location.name+"&format=json&callback=wikiCallback";
  var wikilinks='';
  var wikilist='';
    $.ajax(wikiurl,{
