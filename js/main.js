@@ -1,3 +1,8 @@
+// TODO: Add carousel for images in infowindow
+// TODO: make it responsive for mobile
+// TODO: use a API to display weather
+// TODO: use places API to show trekking routes around a peak.
+
 'use strict';
 var map;
 var markers=[];
@@ -5,6 +10,7 @@ var polygon=null;
 var dark=false;
 var placeRequest={};
 var photos_array=[];
+var peakInfo;
 //Map style taken from snappy Maps (name:Subtle Grayscale	by Paulo Avila)
 var mapstyle = [{"featureType":"administrative","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":"50"},{"visibility":"simplified"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"lightness":"30"}]},{"featureType":"road.local","elementType":"all","stylers":[{"lightness":"40"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"lightness":-25},{"saturation":-100}]}];
 
@@ -15,8 +21,10 @@ map=new google.maps.Map(document.getElementById('snowmap'),{
  center:{lat:13.030923, lng:80.209050},
  styles:mapstyle,
  zoom:3,
- mapTypeId:'terrain'
+ mapTypeId:'terrain',
+ mapTypeControl:false
 });
+ peakInfo = new google.maps.InfoWindow;
 //call function to add marker to the peaks
 addmarkerforpeaks();
 //function to duplicate markers to peaks_list object
