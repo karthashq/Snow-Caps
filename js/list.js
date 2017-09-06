@@ -519,8 +519,6 @@ function locateSelected(peakSelected) {
       radius: 5
    };
    //console.log(peakSelected.position);
-   //sets the modal name to that of the selected peak.
-   $("#ModalLabel").html(peakSelected.name);
    //call the function to get info from the wikipedia,google places and streetview APIs.
    InfofromWiki(peakSelected);
    placeSearch(placeRequest, peakSelected);
@@ -546,6 +544,8 @@ function InfofromWiki(location) {
                '<button type="button" class="btn  btn-modal" data-toggle="modal" data-target="#myModal">Experience It!</button>'
          });
          peakInfo.open(map, location.marker);
+         //sets the modal name to that of the selected peak.
+         $("#ModalLabel").html(location.name);
          $(".modal-wiki-info").empty();
          $(".modal-wiki-info").append('<p style="font-size:17px">' +
             wikiinfo + '(<a href=' + wikilinks + '>Click here</a>to read more from wiki.).</p>');
