@@ -7,17 +7,17 @@ html, body {
 body{
   color:silver;
 }
-#sidebar{
-background-color: rgba(51,51,51,0.5);
-padding:0 !important;
-text-align: center;
+.info{
+  color:silver;
 }
 .mapArea{
-padding: 0 !important;
+width:100vw;
+height: 100vh;
+overflow: hidden;
 }
 #snowmap {
   width:100%;
-  height: 635px;
+  height: 100%;
 }
 .icon{
   width:30px;
@@ -26,10 +26,6 @@ padding: 0 !important;
 }
 .title{
   color: white;
-}
-#info{
-padding:1.2%;
-color: white;
 }
 #search{
   font-size: 16px;
@@ -46,7 +42,13 @@ color: white;
   height:400px;
   overflow-x: hidden;
 }
-/*styleing the scrollbar*/
+.peaks-list:hover{
+  font-weight: bold;
+  color:rgb(176, 176, 176);
+  background-color: rgba(214, 214, 214, 0.04);
+  cursor: pointer;
+}
+/*styling the scrollbar*/
 .peaks::-webkit-scrollbar {
     width: 4px;
     background-color:grey;
@@ -64,40 +66,62 @@ color: white;
     -webkit-box-shadow: outset 0 0 6px rgba(0,0,0,0.5);
     background-color: silver;
 }
+/*to overlay the buttons on the map.*/
 .mapOverlay {
   position: fixed;
   top: 10px;
   left: 40%;
   z-index: 7;
 }
-.peaks-list:hover{
-  font-weight: bold;
-  color:rgb(176, 176, 176);
-  background-color: rgba(214, 214, 214, 0.04);
-  cursor: pointer;
-}
-#infowindow{
-color:#333333;
-margin: 0;
-overflow: hidden;
-}
-.menu-icon{
-  position: absolute;
-  z-index: 5;
-  color:#333333;
-  background-color: rgba(0,0,0,0);
-  left: 1%;
-  top:10px;
-}
-.modal-img-carousel{
-  width:100%;
-  height:100%;
-}
-.modal-street-view{
-  width:100%;
-  height: 100%;
-}
 .carousel-img{
   width:500px;
   height: 500px;
+}
+.btn-modal{
+  background-color: #333333;
+  color:silver;
+}
+.btn-modal:hover{
+  color:#333333;
+  background-color: silver;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+  background-color: rgba(51,51,51,0.5);
+  text-align: center;
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 10px;
+}
+
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
 }
