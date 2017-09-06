@@ -2,7 +2,6 @@
 // TODO: make it responsive for mobile
 // TODO: use a API to display weather
 // TODO: use places API to show trekking routes around a peak.
-'use strict';
 var map;
 var markers = [];
 var polygon = null;
@@ -107,7 +106,7 @@ function initMap() {
       mapTypeId: 'terrain',
       mapTypeControl: false
    });
-   peakInfo = new google.maps.InfoWindow;
+   peakInfo = new google.maps.InfoWindow();
    //call function to add marker to the peaks
    addmarkerforpeaks();
    //function to duplicate markers to peaks_list object
@@ -204,8 +203,8 @@ function searchWithinPolygon() {
    }
    // Extend the boundaries of the map for each marker within the polygon
    var bounds = new google.maps.LatLngBounds();
-   for (var i = 0; i < markerswithinpoly.length; i++) {
-      bounds.extend(markerswithinpoly[i].position);
+   for (var l = 0; l < markerswithinpoly.length; l++) {
+      bounds.extend(markerswithinpoly[l].position);
    }
    map.fitBounds(bounds);
 }
@@ -217,10 +216,16 @@ function hidePeaks() {
 }
 //this function creates a copy of all the markers to the peaks_list oject.
 function duplicatemarkers() {
+   var tempmarker;
    for (var i = 0; i < markers.length; i++) {
       peaks_list.peaks[i].marker = markers[i];
       peaks_list.peaks[i].marker.id = i;
-      peaks_list.peaks[i].marker.addListener('click', function() {
+      tempmarker = peaks_list.peaks[i].marker;
+      listenertoMarker(tempmarker);
+   }
+   //created this function in order to avoid "Don't make functions within a loop. - jslint error"
+   function listenertoMarker(tempmarker) {
+      tempmarker.addListener('click', function() {
          addlistenertoMarkers(this.id);
       });
    }

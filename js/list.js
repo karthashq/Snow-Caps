@@ -548,7 +548,7 @@ function InfofromWiki(location) {
          $("#ModalLabel").html(location.name);
          $(".modal-wiki-info").empty();
          $(".modal-wiki-info").append('<p style="font-size:17px">' +
-            wikiinfo + '(<a href=' + wikilinks + '>Click here</a>to read more from wiki.).</p>');
+            wikiinfo + '(<a href=' + wikilinks + '>Click here</a> to read more from wiki.).</p>');
       }
    });
 }
@@ -566,34 +566,7 @@ function placeSearch(request, peakSelected) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
          //this loop is to request the place details of all the results obtained.
          for (var o = 0; o < results.length; o++) {
-            service.getDetails({
-               placeId: results[o].place_id
-            }, function(place, status) {
-               if (status === google.maps.places.PlacesServiceStatus.OK) {
-                  for (var i = 0; i < place.photos.length; i++) {
-                     peaks_list.peaks[temp].photos_array.push(place.photos[i].getUrl({
-                        'maxWidth': 500,
-                        'maxHeight': 500
-                     }));
-                  }
-                  //add the appropriate content to the modal.
-                  $(".img-badge").html(peaks_list.peaks[temp].photos_array.length);
-                  $(".carousel-inner").empty();
-                  $(".carousel-inner").append('<div class="item active">' +
-                     '<img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />' +
-                     '</div>');
-                  $(".carousel-inner").append('<div class="carousel-caption"><h4>' + peakSelected.name + '</h4></div>');
-                  //this loop adds the images from obtained form the place details API to the
-                  //modal carousel.
-                  for (var i = 0; i < peaks_list.peaks[temp].photos_array.length; i++) {
-                     var imagelink = peaks_list.peaks[temp].photos_array[i];
-                     $(".carousel-inner").append('<div class="item">' +
-                        '<img class="carousel-img" src=' + imagelink + ' alt="pic' + i + '"></div>');
-                  }
-               } else {
-                  alert("Something went wrong.No Place details obtained.<br>" + status);
-               }
-            });
+            DetailServices(service, results, o, peakSelected);
          }
       } else {
          console.log(status);
@@ -606,6 +579,38 @@ function placeSearch(request, peakSelected) {
             status + '</strong>');
       }
    }
+}
+//created this function in order to avoid "Don't make functions within a loop. - jslint error"
+function DetailServices(service, results, o, peakSelected) {
+   var temp = peakSelected.marker.id;
+   service.getDetails({
+      placeId: results[o].place_id
+   }, function(place, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+         for (var p = 0; p < place.photos.length; p++) {
+            peaks_list.peaks[temp].photos_array.push(place.photos[p].getUrl({
+               'maxWidth': 500,
+               'maxHeight': 500
+            }));
+         }
+         //add the appropriate content to the modal.
+         $(".img-badge").html(peaks_list.peaks[temp].photos_array.length);
+         $(".carousel-inner").empty();
+         $(".carousel-inner").append('<div class="item active">' +
+            '<img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />' +
+            '</div>');
+         $(".carousel-inner").append('<div class="carousel-caption"><h4>' + peakSelected.name + '</h4></div>');
+         //this loop adds the images obtained from the place details API to the
+         //modal carousel.
+         for (var i = 0; i < peaks_list.peaks[temp].photos_array.length; i++) {
+            var imagelink = peaks_list.peaks[temp].photos_array[i];
+            $(".carousel-inner").append('<div class="item">' +
+               '<img class="carousel-img" src=' + imagelink + ' alt="pic' + i + '"></div>');
+         }
+      } else {
+         alert("Something went wrong.No Place details obtained.<br>" + status);
+      }
+   });
 }
 //this function calls the google StreetViewService.
 function StreetView(peakSelected) {
@@ -644,7 +649,7 @@ function StreetView(peakSelected) {
 //this function calls the ElevationService to get the
 //elevation of the peaks.
 function displayLocationElevation(peakSelected) {
-   var elevator = new google.maps.ElevationService;
+   var elevator = new google.maps.ElevationService();
    // Initiate the location request
    elevator.getElevationForLocations({
       'locations': [peakSelected.marker.position]
