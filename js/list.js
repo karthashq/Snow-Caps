@@ -300,6 +300,9 @@ markers[i].setMap(map);
 
 function locateSelected(peakSelected){
  //function to highlight the selected peak from list
+ if(peakInfo.marker!=peakSelected.marker){
+	 peakInfo.close();
+ }
 			map.setCenter(peakSelected.position);
 			map.setZoom(9);
 			for(var i=0;i<peaks_list.peaks.length;i++){
@@ -337,12 +340,12 @@ function InfofromWiki(location){
 			 peakInfo = new google.maps.InfoWindow({
 				Content:'<h3>'+location.name+'</h3><p style="font-size:17px">'
 				+wikiinfo+'(<a href='+wikilinks+'>Click here</a> for more about this place in wiki.).</p><br>'
-				+'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Launch demo modal</button>'
+				+'<button type="button" class="btn  btn-modal" data-toggle="modal" data-target="#myModal">Experience It!</button>'
 			});
 			peakInfo.open(map, location.marker);
 			$(".modal-wiki-info").empty();
 			$(".modal-wiki-info").append('<p style="font-size:17px">'
-			+wikiinfo+'(<a href='+wikilinks+'>Click here</a> for more about this place in wiki.).</p>');
+			+wikiinfo+'(<a href='+wikilinks+'>Click here</a>to read more from wiki.).</p>');
    }
    });
 }
@@ -355,13 +358,16 @@ function placeSearch(request,peakSelected){
 function callback(results, status) {
 	console.log(results);
   if (status == google.maps.places.PlacesServiceStatus.OK) {
+		//this loop is to request the place details of all the results obtained.
+		for(var o=0;o<results.length;o++){
 	service.getDetails({
-		placeId: results[0].place_id
+		placeId: results[o].place_id
 	}, function(place, status) {
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
 			for(var i=0;i<place.photos.length;i++){
-			peaks_list.peaks[temp].photos_array[i]=place.photos[i].getUrl({'maxWidth': 500, 'maxHeight': 500});
+			peaks_list.peaks[temp].photos_array.push(place.photos[i].getUrl({'maxWidth': 500, 'maxHeight': 500}));
 		}
+		$(".img-badge").html(peaks_list.peaks[temp].photos_array.length);
 		$(".carousel-inner").empty();
 		$(".carousel-inner").append('<div class="item active">'+
 					 '<img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />'
@@ -376,6 +382,7 @@ function callback(results, status) {
 			alert("Something went wrong.No Place details obtained<br>"+status);
 		}
 });
+}
 }else{
 	console.log(status);
 	$(".modal-img-carousel").empty();
@@ -407,8 +414,8 @@ function StreetView(peakSelected){
 			var panorama = new google.maps.StreetViewPanorama(
 				document.getElementById('pano'), panoramaOptions);
 		} else {
-			$('.modal-street-view').empty();
-			$('.modal-street-view').append('<div>No Street View Found at'+peakSelected.marker.title
+			$('#pano').empty();
+			$('#pano').append('<div>No Street View Found at'+peakSelected.marker.title
 																			+'</div><br>status:'+status);
 		}
 	}
