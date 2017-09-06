@@ -299,6 +299,11 @@ markers[i].setMap(map);
 }
 
 function locateSelected(peakSelected){
+	//hide the side bar once the peak is clicked
+	console.log($('#sidebar').hasClass("active"));
+	if($('#sidebar').hasClass("active")){
+	togglesidebar();
+}
  //function to highlight the selected peak from list
  if(peakInfo.marker!=peakSelected.marker){
 	 peakInfo.close();
@@ -357,6 +362,7 @@ function placeSearch(request,peakSelected){
   service.nearbySearch(request, callback);
 function callback(results, status) {
 	console.log(results);
+	peaks_list.peaks[temp].photos_array=[];
   if (status == google.maps.places.PlacesServiceStatus.OK) {
 		//this loop is to request the place details of all the results obtained.
 		for(var o=0;o<results.length;o++){
@@ -372,21 +378,25 @@ function callback(results, status) {
 		$(".carousel-inner").append('<div class="item active">'+
 					 '<img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />'
 				 +'</div>');
+				 $(".carousel-inner").append('<div class="carousel-caption"><h4>'+peakSelected.name+'</h4></div>')
 		for(var i=0;i<peaks_list.peaks[temp].photos_array.length;i++){
 			var imagelink=peaks_list.peaks[temp].photos_array[i];
 		$(".carousel-inner").append('<div class="item">'+
 		      '<img class="carousel-img" src='+imagelink+' alt="pic'+i+'"></div>');
 			}
-//addImages(peakSelected,temp)
 	}else{
-			alert("Something went wrong.No Place details obtained<br>"+status);
+			alert("Something went wrong.No Place details obtained.<br>"+status);
 		}
 });
 }
 }else{
 	console.log(status);
-	$(".modal-img-carousel").empty();
-	$(".modal-img-carousel").append('sorry,No results were obtained form the google places API :(<br>Status:<strong>'+
+	$(".carousel-inner").empty();
+	$(".carousel-inner").append('<div class="item active">'+
+				 '<img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />'
+			 +'</div>');
+	$(".img-badge").html(peaks_list.peaks[temp].photos_array.length);
+	$(".carousel-inner").append('sorry,No results were obtained form the google places API for '+peakSelected.name+':(<br>Status:<strong>'+
 																	status+'</strong>');
 }
 }
@@ -415,7 +425,7 @@ function StreetView(peakSelected){
 				document.getElementById('pano'), panoramaOptions);
 		} else {
 			$('#pano').empty();
-			$('#pano').append('<div>No Street View Found at'+peakSelected.marker.title
+			$('#pano').append('<div>No Street View Found at '+peakSelected.marker.title
 																			+'</div><br>status:'+status);
 		}
 	}

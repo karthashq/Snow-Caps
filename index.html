@@ -26,16 +26,16 @@
                <li class="peaks-list" data-bind="text:name,style:{color:'#f9f9f9',padding:'10px'},click:locateSelected"></li>
             </ul>
          </nav>
+         <div class="btn-group mapOverlay" role="group">
+            <!-- Page Content Holder -->
+            <button  id="sidebarCollapse" class="btn btn-default">
+            <i class="glyphicon glyphicon-align-justify"></i>
+            </button>
+            <button class="btn btn-default drawing">DrawTools</button>
+            <button class="btn btn-default" data-bind="click:switchTheme">Bright/dark</button>
+            <button class="btn btn-default" data-bind="click:resetPeaks">Reset Markers</button>
+         </div>
          <div class="mapArea">
-            <div class="btn-group mapOverlay" role="group">
-               <!-- Page Content Holder -->
-               <button  id="sidebarCollapse" class="btn btn-default">
-               <i class="glyphicon glyphicon-align-justify"></i>
-               </button>
-               <button class="btn btn-default drawing">DrawTools</button>
-               <button class="btn btn-default" data-bind="click:switchTheme">Bright/dark</button>
-               <button class="btn btn-default" data-bind="click:resetPeaks">Reset Markers</button>
-            </div>
             <div id="snowmap"></div>
          </div>
       </div>
@@ -77,7 +77,7 @@
                </div>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-modal" data-dismiss="modal">Close</button>
             </div>
          </div>
       </div>
