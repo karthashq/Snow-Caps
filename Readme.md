@@ -16,6 +16,7 @@
 * google maps API
 * google places,place details Service
 * Google Maps Elevation Service
+* Google Street View
 
 ### List of libraries used
 * KnockOut JS
