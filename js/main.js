@@ -156,3 +156,9 @@ function addlistenertoMarkers(k) {
 function togglesidebar() {
    $('#sidebar').toggleClass('active');
 }
+//function to be executed when the map doesnt load.
+function mapError(){
+   $(".mapArea").html("<p id='mapError'>"+
+      "Something went wrong.The map could not load."
+      +"<br>Try Again Later.</p>");
+}

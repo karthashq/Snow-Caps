@@ -112,7 +112,11 @@ overflow: hidden;
     padding: 10px;
 }
 
-
+#mapError{
+  padding-top:150px;
+  padding-left:30px;
+  font-size:30px
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
