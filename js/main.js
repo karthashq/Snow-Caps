@@ -9,90 +9,7 @@ var dark = false;
 var placeRequest = {};
 var photos_array = [];
 var peakInfo;
-//Map style taken from snappy Maps (name:Subtle Grayscale	by Paulo Avila)
-var mapstyle = [{
-   "featureType": "administrative",
-   "elementType": "all",
-   "stylers": [{
-      "saturation": "-100"
-   }]
-}, {
-   "featureType": "administrative.province",
-   "elementType": "all",
-   "stylers": [{
-      "visibility": "off"
-   }]
-}, {
-   "featureType": "landscape",
-   "elementType": "all",
-   "stylers": [{
-      "saturation": -100
-   }, {
-      "lightness": 65
-   }, {
-      "visibility": "on"
-   }]
-}, {
-   "featureType": "poi",
-   "elementType": "all",
-   "stylers": [{
-      "saturation": -100
-   }, {
-      "lightness": "50"
-   }, {
-      "visibility": "simplified"
-   }]
-}, {
-   "featureType": "road",
-   "elementType": "all",
-   "stylers": [{
-      "saturation": "-100"
-   }]
-}, {
-   "featureType": "road.highway",
-   "elementType": "all",
-   "stylers": [{
-      "visibility": "simplified"
-   }]
-}, {
-   "featureType": "road.arterial",
-   "elementType": "all",
-   "stylers": [{
-      "lightness": "30"
-   }]
-}, {
-   "featureType": "road.local",
-   "elementType": "all",
-   "stylers": [{
-      "lightness": "40"
-   }]
-}, {
-   "featureType": "transit",
-   "elementType": "all",
-   "stylers": [{
-      "saturation": -100
-   }, {
-      "visibility": "simplified"
-   }]
-}, {
-   "featureType": "water",
-   "elementType": "geometry",
-   "stylers": [{
-      "hue": "#ffff00"
-   }, {
-      "lightness": -25
-   }, {
-      "saturation": -97
-   }]
-}, {
-   "featureType": "water",
-   "elementType": "labels",
-   "stylers": [{
-      "lightness": -25
-   }, {
-      "saturation": -100
-   }]
-}];
+var drawingManager;
 
 function initMap() {
    //creating the map using google Maps API
@@ -101,7 +18,7 @@ function initMap() {
          lat: 13.030923,
          lng: 80.209050
       },
-      styles: mapstyle,
+      styles: mapstyle1,
       zoom: 3,
       mapTypeId: 'terrain',
       mapTypeControl: false
@@ -109,11 +26,11 @@ function initMap() {
    peakInfo = new google.maps.InfoWindow();
    //call function to add marker to the peaks
    addmarkerforpeaks();
-   //function to duplicate markers to peaks_list object
+   //function to duplicate markers to snowCaps object
    duplicatemarkers();
    getbounds();
    // Initialize the drawing manager.
-   var drawingManager = new google.maps.drawing.DrawingManager({
+   drawingManager = new google.maps.drawing.DrawingManager({
       drawingMode: google.maps.drawing.OverlayType.POLYGON,
       drawingControl: true,
       drawingControlOptions: {
@@ -123,9 +40,6 @@ function initMap() {
          ]
       }
    });
-   $('.drawing').click(function() {
-      toggleDrawing(drawingManager);
-   }); //change to function using Knockout
    // Add an event listener so that the polygon is captured,  call the
    // searchWithinPolygon function. This will show the markers in the polygon
    // and hide any outside of it.
@@ -150,10 +64,10 @@ function initMap() {
 }
 // The following group uses the location array to create an array of markers on initialize.
 function addmarkerforpeaks() {
-   for (var i = 0; i < peaks_list.peaks.length; i++) {
+   for (var i = 0; i < snowCaps.peaks.length; i++) {
       // Get the position from the location array.
-      var position = peaks_list.peaks[i].position;
-      var title = peaks_list.peaks[i].name;
+      var position = snowCaps.peaks[i].position;
+      var title = snowCaps.peaks[i].name;
       //console.log(title,position);
       // Create a marker per location, and put into markers array.
       var marker = new google.maps.Marker({
@@ -214,13 +128,13 @@ function hidePeaks() {
       markers[i].setMap(null);
    }
 }
-//this function creates a copy of all the markers to the peaks_list oject.
+//this function creates a copy of all the markers to the snowCaps oject.
 function duplicatemarkers() {
    var tempmarker;
    for (var i = 0; i < markers.length; i++) {
-      peaks_list.peaks[i].marker = markers[i];
-      peaks_list.peaks[i].marker.id = i;
-      tempmarker = peaks_list.peaks[i].marker;
+      snowCaps.peaks[i].marker = markers[i];
+      snowCaps.peaks[i].marker.id = i;
+      tempmarker = snowCaps.peaks[i].marker;
       listenertoMarker(tempmarker);
    }
    //created this function in order to avoid "Don't make functions within a loop. - jslint error"
@@ -232,9 +146,13 @@ function duplicatemarkers() {
 }
 //this function adds event listener to the markers.
 function addlistenertoMarkers(k) {
-   for (var i = 0; i < peaks_list.peaks.length; i++) {
-      if (peaks_list.peaks[i].marker.id == k) {
-         locateSelected(peaks_list.peaks[i]);
+   for (var i = 0; i < snowCaps.peaks.length; i++) {
+      if (snowCaps.peaks[i].marker.id == k) {
+         locateSelected(snowCaps.peaks[i]);
       }
    }
+}
+//to toggle the sidebar on clicking the hamburger icon
+function togglesidebar() {
+   $('#sidebar').toggleClass('active');
 }

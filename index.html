@@ -8,14 +8,15 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <link rel="stylesheet" href="css/style.css">
       <script src="libraries/knockout-3.4.2.js"></script>
+      <script type="text/javascript" src="js/data.js"></script>
    </head>
    <body>
       <div class="wrapper">
          <!-- Sidebar Holder -->
          <nav id="sidebar">
             <div class="sidebar-header">
-               <h3 class="title"><img class="icon" alt="icon" src="icons\mountain-peak-clipart-1.jpg">
-                  Snow Caps<img class="icon" alt="icon" src="icons\mountain-peak-clipart-1.jpg">
+               <h3 class="title"><img class="icon" alt="icon" src="icons/mountain-peak-clipart-1.jpg">
+                  Snow Caps<img class="icon" alt="icon" src="icons/mountain-peak-clipart-1.jpg">
                </h3>
                <hr>
             </div>
@@ -28,10 +29,10 @@
          </nav>
          <div class="btn-group mapOverlay" role="group">
             <!-- Page Content Holder -->
-            <button  id="sidebarCollapse" class="btn btn-default">
+            <button  id="sidebarCollapse" class="btn btn-default" data-bind="click:togglesidebar">
             <i class="glyphicon glyphicon-align-justify"></i>
             </button>
-            <button class="btn btn-default drawing">DrawTools</button>
+            <button class="btn btn-default drawing" data-bind="click:function(){toggleDrawing(drawingManager);}">DrawTools</button>
             <button class="btn btn-default" data-bind="click:switchTheme">Bright/dark</button>
             <button class="btn btn-default" data-bind="click:resetPeaks">Reset Markers</button>
          </div>
@@ -40,24 +41,23 @@
          </div>
       </div>
       <!-- Modal -->
-      <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
          <div class="modal-dialog" role="document">
             <div class="modal-content">
                <div class="modal-header">
-                  <h2 class="modal-title" id="ModalLabel"></h2>
+                  <h2 class="modal-title" id="ModalLabel" data-bind="text:modalTitle">Peak Title</h2>
                </div>
                <div class="modal-body">
-                  <div class="modal-wiki-info"></div>
-                  <span class="modal-peak-Elevation">
+                  <div class="modal-wiki-info" data-bind="html:modalWikiInfo"></div>
+                  <span class="modal-peak-Elevation" data-bind="html:modalPeakElevation"></span>
                </div>
                <div class="container-fluid">
                   <div class="modal-img-carousel col-sm-6">
-                     <h4>Images from Google Places API <span class="badge img-badge"></span></h4>
+                     <h4>Images from Google Places API
+                      <span class="badge img-badge" data-bind="html:imgBadge"></span>
+                      </h4>
                      <div id="picsCarousel" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner" role="listbox">
-                           <div class="item active">
-                              <img class="carousel-img" src="icons\\mountain-thumb.jpg" alt="mountain thumbnail" />
-                           </div>
+                        <div class="carousel-inner" data-bind="html:carouselInner" role="listbox">
                            <!--The images will be generated when a marker or name from the list is clicked.-->
                         </div>
                         <!-- Carousel controls -->
@@ -71,7 +71,7 @@
                   </div>
                   <div class="modal-street-view col-sm-6">
                      <h4>Street View:</h4>
-                     <div id="pano"></div>
+                     <div id="pano" data-bind="html:pano"></div>
                      <p><em>(If black screen appears.look at it in full screen.)</em></p>
                   </div>
                </div>
@@ -81,18 +81,13 @@
             </div>
          </div>
       </div>
-      <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+      <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script src="js/list.js"></script>
       <script src="js/main.js"></script>
-      <script type="text/javascript">
-         $(document).ready(function () {
-             $('#sidebarCollapse').on('click',togglesidebar);
-             });
-             function togglesidebar() {
-                $('#sidebar').toggleClass('active');
-              }
-      </script>
+      <script src="js/list.js"></script>
       <script  async src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyCXj00vgmEwBZRsh7tnoONa5Hnf9xnGxOc&callback=initMap"></script>
    </body>
 </html>
