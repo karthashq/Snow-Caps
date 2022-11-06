@@ -1,6 +1,6 @@
 # Neighbourhood Map Project
 
-* Here is a link to the [live version](https://ashokviswa96.github.io/Snow-Caps/) of the app.
+* Here is a link to the [live version](https://karthashq.github.io/Snow-Caps/) of the app.
 
 ### Instructions to run the map
 * Run the file index.html from your browser
